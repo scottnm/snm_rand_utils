@@ -18,7 +18,7 @@ impl ThreadRangeRng {
 
 impl<T: PartialOrd + rand::distributions::uniform::SampleUniform> RangeRng<T> for ThreadRangeRng {
     fn gen_range(&mut self, lower: T, upper: T) -> T {
-        self.rng.gen_range(lower..upper)
+        self.rng.gen_range(lower, upper)
     }
 }
 
