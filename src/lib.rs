@@ -69,3 +69,31 @@ pub mod mocks {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn gen_wrapper<T: PartialOrd>(rng: &mut dyn RangeRng<T>, lower: T, upper: T) -> T {
+        rng.gen_range(lower, upper)
+    }
+
+    #[test]
+    fn test_thread_random() {
+        // this test is mostly here to verify that things compile
+        let mut rng = ThreadRangeRng::new();
+        let first_value = rng.gen_range(0, 10);
+        let next_value = gen_wrapper(&mut rng, 10, 20);
+        assert_ne!(first_value, next_value);
+    }
+
+    #[test]
+    fn test_single_value_random() {
+        let mut rng = mocks::SingleValueRangeRng::new(10i32);
+        let first_value = rng.gen_range(0, 100);
+        for _ in 1..10 {
+            let next_value = gen_wrapper(&mut rng, 0, 100);
+            assert_eq!(first_value, next_value);
+        }
+    }
+}
