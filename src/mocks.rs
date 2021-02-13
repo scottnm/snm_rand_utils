@@ -57,14 +57,4 @@ mod tests {
             assert_eq!(first_value, next_value);
         }
     }
-
-    #[test]
-    fn test_select_rand() {
-        let mut rng = SingleValueRangeRng::new(10i32);
-        let first_value = rng.gen_range(0, 100);
-        for _ in 1..10 {
-            let next_value = sample_gen_range_caller(&mut rng, 0, 100);
-            assert_eq!(first_value, next_value);
-        }
-    }
 }
